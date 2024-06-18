@@ -1,0 +1,137 @@
+name: Tests
+
+env:
+    php_version: '8.3'
+
+on:
+    push:
+        branches:
+            - 'main'
+    pull_request:
+
+jobs:
+    build:
+        runs-on: ubuntu-24.04
+        steps:
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ env.php_version }}
+
+            -   uses: actions/checkout@v4
+
+            -   name: Validate composer.json and composer.lock
+                run: composer validate --no-check-publish
+
+            -   name: Get Composer Cache Directory
+                id: composer-cache
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+            -   name: Cache Composer packages
+                uses: actions/cache@v4
+                with:
+                    path: ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: |
+                        ${{ runner.os }}-composer-
+
+            -   name: Install application dependencies
+                run: composer install --prefer-dist --no-progress
+
+            -   name: Install dev-ops dependencies
+                run: composer install -d ./dev-ops/ci --prefer-dist --no-progress
+
+            -   name: Install phpunit
+                run: php bin/phpunit install --configuration dev-ops/ci/config/phpunit.xml.dist
+
+            -   name: Store build
+                uses: actions/cache@v4
+                id: restore-build
+                with:
+                    path: ./*
+                    key: ${{ runner.os }}-build-${{ github.sha }}
+
+    lint:
+        runs-on: ubuntu-24.04
+        needs: build
+        steps:
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ env.php_version }}
+
+            -   name: Restore build
+                uses: actions/cache@v4
+                id: restore-build
+                with:
+                    path: ./*
+                    key: ${{ runner.os }}-build-${{ github.sha }}
+
+            -   name: Validate container with dev environment
+                run: php bin/console lint:container --env=dev
+
+            -   name: Validate container with prod environment
+                run: php bin/console lint:container --env=prod
+
+            -   name: Validate twig templates
+                run: php bin/console lint:twig templates
+
+            -   name: Validate config yaml files
+                run: php bin/console lint:yaml config --parse-tags
+
+    php-cs-fixer:
+        runs-on: ubuntu-24.04
+        needs: build
+        steps:
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ env.php_version }}
+
+            -   name: Restore build
+                uses: actions/cache@v4
+                id: restore-build
+                with:
+                    path: ./*
+                    key: ${{ runner.os }}-build-${{ github.sha }}
+
+            -   name: Run test suite
+                run: php dev-ops/ci/vendor/bin/php-cs-fixer fix --config dev-ops/ci/config/.php-cs-fixer.dist.php --dry-run --diff
+
+    phpstan:
+        runs-on: ubuntu-24.04
+        needs: build
+        steps:
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ env.php_version }}
+
+            -   name: Restore build
+                uses: actions/cache@v4
+                id: restore-build
+                with:
+                    path: ./*
+                    key: ${{ runner.os }}-build-${{ github.sha }}
+
+            -   name: Run phpstan
+                run: php -d memory_limit=-1 dev-ops/ci/vendor/bin/phpstan analyse -c dev-ops/ci/config/phpstan.neon
+
+    phpunit:
+        runs-on: ubuntu-24.04
+        needs: build
+        steps:
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ env.php_version }}
+
+            -   name: Restore build
+                uses: actions/cache@v4
+                id: restore-build
+                with:
+                    path: ./*
+                    key: ${{ runner.os }}-build-${{ github.sha }}
+
+            -   name: Run test suite
+                run: php bin/phpunit --configuration dev-ops/ci/config/phpunit.xml.dist
