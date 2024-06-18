@@ -1,0 +1,12 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 1
+    paths:
+        - %currentWorkingDirectory%/src/
+    scanDirectories:
+        - %currentWorkingDirectory%/src/
+    bootstrapFiles:
+        - %currentWorkingDirectory%/vendor/autoload.php
+    tmpDir: %currentWorkingDirectory%/dev-ops/ci/cache/phpstan
