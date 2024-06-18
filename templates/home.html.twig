@@ -24,6 +24,8 @@
                         <a href="{{ url('mock_status_code_always', {'code': status_code}) }}">Always</a>
                         /
                         <a href="{{ url('mock_status_code_randomly', {'code': status_code}) }}">Randomly</a>
+                        /
+                        <a href="{{ url('mock_status_code_interval', {'code': status_code, 'interval': 'minute', 'time': 5}) }}">Interval (5 minutes)</a>
                     </td>
                 </tr>
             {% endfor %}
