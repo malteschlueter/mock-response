@@ -28,7 +28,7 @@ final class MockController extends AbstractController
             $code = 200;
         }
 
-        $content = $code . ' - ' . Response::$statusTexts[$code] ?? 'Unknown status code';
+        $content = $code . ' - ' . (Response::$statusTexts[$code] ?? 'Unknown status code');
 
         return new Response(content: $content, status: $code);
     }
@@ -52,7 +52,7 @@ final class MockController extends AbstractController
             $code = 200;
         }
 
-        $content = $code . ' - ' . Response::$statusTexts[$code] ?? 'Unknown status code';
+        $content = $code . ' - ' . (Response::$statusTexts[$code] ?? 'Unknown status code');
 
         return new Response(content: $content, status: $code);
     }

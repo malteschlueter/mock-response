@@ -7,30 +7,76 @@
     </head>
     <body>
         <h1>Mock response</h1>
+
         <p>See project on <a href="https://github.com/malteschlueter/mock-response" target="_blank">GitHub</a>.</p>
-        <table>
-            <thead>
-            <tr>
-                <th>Status code</th>
-                <th>Text</th>
-                <th>Link</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for status_code, text in status_codes  %}
+
+        <div>
+            <h2>Status codes</h2>
+            <table>
+                <thead>
                 <tr>
-                    <td>{{ status_code }}</td>
-                    <td>{{ text }}</td>
-                    <td>
-                        <a href="{{ url('mock_status_code_always', {'code': status_code}) }}">Always</a>
-                        /
-                        <a href="{{ url('mock_status_code_randomly', {'code': status_code}) }}">Randomly</a>
-                        /
-                        <a href="{{ url('mock_status_code_interval', {'code': status_code, 'interval': 'minute', 'time': 5}) }}">Interval (5 minutes)</a>
-                    </td>
+                    <th>Status code</th>
+                    <th>Text</th>
+                    <th>Link</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                {% for status_code, text in status_codes  %}
+                    <tr>
+                        <td>{{ status_code }}</td>
+                        <td>{{ text }}</td>
+                        <td>
+                            <a href="{{ url('mock_status_code_always', {'code': status_code}) }}">Always</a>
+                            /
+                            <a href="{{ url('mock_status_code_randomly', {'code': status_code}) }}">Randomly</a>
+                            /
+                            <a href="{{ url('mock_status_code_interval', {'code': status_code, 'interval': 'minute', 'time': 5}) }}">Interval (5 minutes)</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h2>
+                IETF health check
+                <a href="https://datatracker.ietf.org/doc/html/draft-inadarei-api-health-check" target="_blank">
+                    ?
+                </a>
+            </h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Link</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for status in ietf_health_check_status  %}
+                    <tr>
+                        <td>{{ status.name }}</td>
+                        <td>
+                            <a href="{{ url('mock_ietf_health_check_status_always', {'status': status.value}) }}">Always</a>
+                            /
+                            <a href="{{ url('mock_ietf_health_check_status_randomly', {'status': status.value}) }}">Randomly</a>
+                            /
+                            <a href="{{ url('mock_ietf_health_check_status_interval', {'status': status.value, 'interval': 'minute', 'time': 5}) }}">Interval (5 minutes)</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                {% for data in ietf_health_check_status_with_checks  %}
+                    <tr>
+                        <td>
+                            With {{ data.total_pass_checks|default(0) }} pass, {{ data.total_fail_checks|default(0) }} fail, {{ data.total_warn_checks|default(0) }} warn
+                        </td>
+                        <td>
+                            <a href="{{ url('mock_ietf_health_check_status_with_checks', data) }}">Open</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>

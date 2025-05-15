@@ -1,0 +1,77 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Factory;
+
+use App\DataTransferObject\IetfHealthCheckCheck;
+use App\DataTransferObject\IetfHealthCheckResponse;
+use App\Enum\IetfHealthCheckStatus;
+use Assert\Assert;
+
+final class IetfHealthCheckResponseFactory
+{
+    private ?IetfHealthCheckStatus $status = null;
+
+    /**
+     * @var array<string, int>
+     */
+    private array $checks = [];
+
+    private function __construct()
+    {
+    }
+
+    public static function new(): self
+    {
+        return new self();
+    }
+
+    public function create(): IetfHealthCheckResponse
+    {
+        $checks = [];
+
+        foreach ($this->checks as $statusValue => $totalToCreate) {
+            $statusCheck = IetfHealthCheckStatus::from($statusValue);
+
+            for ($i = 0; $i < $totalToCreate; ++$i) {
+                $checks[$statusCheck->value . ':check-' . $i] = new IetfHealthCheckCheck(
+                    componentId: 'component-id-' . $i,
+                    status: $statusCheck,
+                );
+            }
+
+            if ($totalToCreate > 0) {
+                $this->status = match (true) {
+                    $this->status === null => $statusCheck,
+                    $statusCheck === IetfHealthCheckStatus::Fail => $statusCheck,
+                    $statusCheck === IetfHealthCheckStatus::Warn && $this->status !== IetfHealthCheckStatus::Fail => $statusCheck,
+                    default => $this->status,
+                };
+            }
+        }
+
+        Assert::that($this->status)
+            ->notNull('Status is required')
+        ;
+
+        return new IetfHealthCheckResponse(
+            status: $this->status,
+            checks: $checks,
+        );
+    }
+
+    public function withStatus(IetfHealthCheckStatus $status): self
+    {
+        $this->status = $status;
+
+        return clone $this;
+    }
+
+    public function withChecks(IetfHealthCheckStatus $status, int $totalToCreate): self
+    {
+        $this->checks[$status->value] = $totalToCreate;
+
+        return clone $this;
+    }
+}
