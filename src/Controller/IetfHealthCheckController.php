@@ -82,6 +82,7 @@ final class IetfHealthCheckController extends AbstractController
 
         return new JsonResponse(
             IetfHealthCheckResponseFactory::new()
+                ->withOutput($totalPassChecks . ' pass checks, ' . $totalFailChecks . ' fail checks, ' . $totalWarnChecks . ' warn checks')
                 ->withChecks(IetfHealthCheckStatus::Pass, $totalPassChecks)
                 ->withChecks(IetfHealthCheckStatus::Fail, $totalFailChecks)
                 ->withChecks(IetfHealthCheckStatus::Warn, $totalWarnChecks)

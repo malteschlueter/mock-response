@@ -12,6 +12,7 @@ use Assert\Assert;
 final class IetfHealthCheckResponseFactory
 {
     private ?IetfHealthCheckStatus $status = null;
+    private ?string $output = null;
 
     /**
      * @var array<string, int>
@@ -38,6 +39,7 @@ final class IetfHealthCheckResponseFactory
                 $checks[$statusCheck->value . ':check-' . $i] = new IetfHealthCheckCheck(
                     componentId: 'component-id-' . $i,
                     status: $statusCheck,
+                    output: 'check output ' . $i,
                 );
             }
 
@@ -57,6 +59,7 @@ final class IetfHealthCheckResponseFactory
 
         return new IetfHealthCheckResponse(
             status: $this->status,
+            output: $this->output,
             checks: $checks,
         );
     }
@@ -64,6 +67,13 @@ final class IetfHealthCheckResponseFactory
     public function withStatus(IetfHealthCheckStatus $status): self
     {
         $this->status = $status;
+
+        return clone $this;
+    }
+
+    public function withOutput(string $output): self
+    {
+        $this->output = $output;
 
         return clone $this;
     }
