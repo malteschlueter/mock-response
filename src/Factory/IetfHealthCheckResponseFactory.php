@@ -38,7 +38,7 @@ final class IetfHealthCheckResponseFactory
             for ($i = 0; $i < $totalToCreate; ++$i) {
                 $checks[$statusCheck->value . ':check-' . $i] = new IetfHealthCheckCheck(
                     componentId: 'component-id-' . $i,
-                    observedValue: random_int(0, 100) / 100,
+                    observedValue: (string) (random_int(0, 100) / 100),
                     observedUnit: 'percent',
                     status: $statusCheck,
                     output: 'check output ' . $i,

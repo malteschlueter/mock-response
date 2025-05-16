@@ -99,23 +99,37 @@ final class IetfHealthCheckController extends AbstractController
     public function customChecks(): Response
     {
         $response = new IetfHealthCheckResponse(
-            status: IetfHealthCheckStatus::Pass,
+            status: IetfHealthCheckStatus::Warn,
             output: 'Some individual output can be given here',
             checks: [
                 'server.space.used' => new IetfHealthCheckCheck(
-                    observedValue: 0.75,
+                    observedValue: '0.75',
                     observedUnit: 'percent',
                     status: IetfHealthCheckStatus::Pass,
+                    output: 'Currently is 75% of the disk space used.',
                     customFields: [
                         'metricType' => 'time_series_percent',
                         'limitType' => 'max',
-                        'limit' => 0.9,
+                        'limit' => '0.9',
+                        'description' => 'Some description is visible.',
+                    ]
+                ),
+                'server.ram.used' => new IetfHealthCheckCheck(
+                    observedValue: '0.85',
+                    observedUnit: 'percent',
+                    status: IetfHealthCheckStatus::Warn,
+                    output: 'The RAM usage is 85%. This is just a warning and should be checked.',
+                    customFields: [
+                        'metricType' => 'time_series_percent',
+                        'limitType' => 'max',
+                        'limit' => '0.95',
                     ]
                 ),
                 'server.updates.system' => new IetfHealthCheckCheck(
                     observedValue: 35,
                     observedUnit: 'updates',
                     status: IetfHealthCheckStatus::Pass,
+                    output: 'Currently 35 updates are available.',
                     customFields: [
                         'metricType' => 'time_series_numeric',
                         'limitType' => 'max',
@@ -126,10 +140,21 @@ final class IetfHealthCheckController extends AbstractController
                     observedValue: 3,
                     observedUnit: 'updates',
                     status: IetfHealthCheckStatus::Fail,
+                    output: 'Currently 3 critical updates are available.',
                     customFields: [
                         'metricType' => 'time_series_numeric',
                         'limitType' => 'max',
                         'limit' => 1,
+                        'description' => 'This is a critical update and should be installed as soon as possible.',
+                    ]
+                ),
+                'server.info' => new IetfHealthCheckCheck(
+                    observedValue: 'test value',
+                    observedUnit: 'without unit',
+                    status: IetfHealthCheckStatus::Pass,
+                    output: 'This is just a test without a graph.',
+                    customFields: [
+                        'description' => 'This is a additional text.',
                     ]
                 ),
             ]
