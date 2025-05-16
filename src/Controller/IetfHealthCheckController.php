@@ -103,7 +103,7 @@ final class IetfHealthCheckController extends AbstractController
             output: 'Some individual output can be given here',
             checks: [
                 'server.space.used' => new IetfHealthCheckCheck(
-                    observedValue: '0.75',
+                    observedValue: (string) (random_int(50, 75) / 100),
                     observedUnit: 'percent',
                     status: IetfHealthCheckStatus::Pass,
                     output: 'Currently is 75% of the disk space used.',
@@ -115,10 +115,10 @@ final class IetfHealthCheckController extends AbstractController
                     ]
                 ),
                 'server.ram.used' => new IetfHealthCheckCheck(
-                    observedValue: '0.85',
+                    observedValue: (string) (random_int(80, 94) / 100),
                     observedUnit: 'percent',
                     status: IetfHealthCheckStatus::Warn,
-                    output: 'The RAM usage is 85%. This is just a warning and should be checked.',
+                    output: 'The RAM usage reached nearly the limit. This is just a warning and should be checked.',
                     customFields: [
                         'metricType' => 'time_series_percent',
                         'limitType' => 'max',
@@ -126,7 +126,7 @@ final class IetfHealthCheckController extends AbstractController
                     ]
                 ),
                 'server.updates.system' => new IetfHealthCheckCheck(
-                    observedValue: 35,
+                    observedValue: random_int(0, 35),
                     observedUnit: 'updates',
                     status: IetfHealthCheckStatus::Pass,
                     output: 'Currently 35 updates are available.',
@@ -137,7 +137,7 @@ final class IetfHealthCheckController extends AbstractController
                     ]
                 ),
                 'server.updates.system_critical' => new IetfHealthCheckCheck(
-                    observedValue: 3,
+                    observedValue: random_int(1, 3),
                     observedUnit: 'updates',
                     status: IetfHealthCheckStatus::Fail,
                     output: 'Currently 3 critical updates are available.',
