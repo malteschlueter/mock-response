@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\DataTransferObject\IetfHealthCheckCheck;
+use App\DataTransferObject\IetfHealthCheckResponse;
 use App\Enum\IetfHealthCheckStatus;
 use App\Factory\IetfHealthCheckResponseFactory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -88,5 +90,51 @@ final class IetfHealthCheckController extends AbstractController
                 ->withChecks(IetfHealthCheckStatus::Warn, $totalWarnChecks)
                 ->create()
         );
+    }
+
+    /**
+     * @TODO UUID should be a dynamic in the future and the checks configurable
+     */
+    #[Route('/ietf-health-check/custom-check/9b8feb48-3799-40ae-92f1-1ac56e9d3cb1', name: 'mock_ietf_health_check_status_custom_checks')]
+    public function customChecks(): Response
+    {
+        $response = new IetfHealthCheckResponse(
+            status: IetfHealthCheckStatus::Pass,
+            output: 'Some individual output can be given here',
+            checks: [
+                'server.space.used' => new IetfHealthCheckCheck(
+                    observedValue: 0.75,
+                    observedUnit: 'percent',
+                    status: IetfHealthCheckStatus::Pass,
+                    customFields: [
+                        'metricType' => 'time_series_percent',
+                        'limitType' => 'max',
+                        'limit' => 0.9,
+                    ]
+                ),
+                'server.updates.system' => new IetfHealthCheckCheck(
+                    observedValue: 35,
+                    observedUnit: 'updates',
+                    status: IetfHealthCheckStatus::Pass,
+                    customFields: [
+                        'metricType' => 'time_series_numeric',
+                        'limitType' => 'max',
+                        'limit' => 50,
+                    ]
+                ),
+                'server.updates.system_critical' => new IetfHealthCheckCheck(
+                    observedValue: 3,
+                    observedUnit: 'updates',
+                    status: IetfHealthCheckStatus::Fail,
+                    customFields: [
+                        'metricType' => 'time_series_numeric',
+                        'limitType' => 'max',
+                        'limit' => 1,
+                    ]
+                ),
+            ]
+        );
+
+        return new JsonResponse($response);
     }
 }

@@ -9,19 +9,21 @@ use App\Enum\IetfHealthCheckStatus;
 final readonly class IetfHealthCheckCheck implements \JsonSerializable
 {
     /**
-     * @param string[]              $affectedEndpoints
-     * @param array<string, string> $links
+     * @param string[]                        $affectedEndpoints
+     * @param array<string, string>           $links
+     * @param array<string, string|int|float> $customFields
      */
     public function __construct(
         public ?string $componentId = null,
         public ?string $componentType = null,
-        public ?string $observedValue = null,
+        public string|int|float|null $observedValue = null,
         public ?string $observedUnit = null,
         public ?IetfHealthCheckStatus $status = null,
         public array $affectedEndpoints = [],
         public ?\DateTimeInterface $time = null,
         public ?string $output = null,
         public array $links = [],
+        public array $customFields = [],
     ) {
     }
 
@@ -66,6 +68,10 @@ final readonly class IetfHealthCheckCheck implements \JsonSerializable
 
         if (\count($this->links) > 0) {
             $data['links'] = $this->links;
+        }
+
+        foreach ($this->customFields as $key => $value) {
+            $data[$key] = $value;
         }
 
         return $data;
