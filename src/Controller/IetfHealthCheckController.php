@@ -112,6 +112,7 @@ final class IetfHealthCheckController extends AbstractController
                         'limitType' => 'max',
                         'limit' => '0.9',
                         'description' => 'Some description is visible.',
+                        'observedValuePrecision' => 2,
                     ]
                 ),
                 'server.ram.used' => new IetfHealthCheckCheck(
@@ -123,6 +124,7 @@ final class IetfHealthCheckController extends AbstractController
                         'metricType' => 'time_series_percent',
                         'limitType' => 'max',
                         'limit' => '0.95',
+                        'observedValuePrecision' => 2,
                     ]
                 ),
                 'server.updates.system' => new IetfHealthCheckCheck(
@@ -134,6 +136,7 @@ final class IetfHealthCheckController extends AbstractController
                         'metricType' => 'time_series_numeric',
                         'limitType' => 'max',
                         'limit' => 50,
+                        'observedValuePrecision' => 0,
                     ]
                 ),
                 'server.updates.system_critical' => new IetfHealthCheckCheck(
@@ -146,6 +149,7 @@ final class IetfHealthCheckController extends AbstractController
                         'limitType' => 'max',
                         'limit' => 1,
                         'description' => 'This is a critical update and should be installed as soon as possible.',
+                        'observedValuePrecision' => 0,
                     ]
                 ),
                 'server.info' => new IetfHealthCheckCheck(
