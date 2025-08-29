@@ -1,3 +1,6 @@
+parameters:
+    app.debug_secret: '%env(default::APP_DEBUG_SECRET)%'
+
 services:
     _defaults:
         autowire: true
@@ -10,3 +13,5 @@ services:
             - '../src/Enum/'
             - '../src/Factory/'
             - '../src/Kernel.php'
+
+    Monolog\Processor\UidProcessor:
