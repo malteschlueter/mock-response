@@ -18,7 +18,7 @@ jobs:
                 with:
                     php-version: ${{ env.php_version }}
 
-            -   uses: actions/checkout@v4
+            -   uses: actions/checkout@v5
 
             -   name: Validate composer.json and composer.lock
                 run: composer validate --no-check-publish
