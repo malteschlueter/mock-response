@@ -5,13 +5,13 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.3",
-        "friendsofphp/php-cs-fixer": "^3.86",
+        "friendsofphp/php-cs-fixer": "^3.88",
         "phpstan/extension-installer": "^1.4.3",
-        "phpstan/phpstan": "^2.1.22",
+        "phpstan/phpstan": "^2.1.29",
         "phpstan/phpstan-beberlei-assert": "^2.0.1",
         "phpstan/phpstan-deprecation-rules": "^2.0.3",
         "phpstan/phpstan-strict-rules": "^2.0.6",
-        "phpstan/phpstan-symfony": "^2.0.7"
+        "phpstan/phpstan-symfony": "^2.0.8"
     },
     "config": {
         "preferred-install": {
