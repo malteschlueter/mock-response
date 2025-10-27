@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Clock\ClockAwareTrait;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,9 +18,17 @@ final class MockController extends AbstractController
     use ClockAwareTrait;
 
     #[Route('/status/{code}', name: 'mock_status_code_always')]
-    public function always(int $code): Response
+    public function always(int $code, Request $request): Response
     {
-        return new Response(content: 'Response status code: ' . $code, status: $code);
+        $setCookie = $request->query->getBoolean('set-cookie');
+
+        $response = new Response(content: 'Response status code: ' . $code, status: $code);
+
+        if ($setCookie) {
+            $response->headers->setCookie(Cookie::create(name: 'mock_status_code', value: (string)$code));
+        }
+
+        return $response;
     }
 
     #[Route('/status/{code}/random', name: 'mock_status_code_randomly')]
