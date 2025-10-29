@@ -8,6 +8,7 @@ use App\DataTransferObject\IetfHealthCheckResponse;
 use App\Enum\IetfHealthCheckStatus;
 use App\Factory\IetfHealthCheckResponseFactory;
 use Assert\InvalidArgumentException;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class IetfHealthCheckResponseFactoryTest extends TestCase
@@ -22,9 +23,7 @@ final class IetfHealthCheckResponseFactoryTest extends TestCase
         ;
     }
 
-    /**
-     * @dataProvider provideOnlyStatus
-     */
+    #[DataProvider('provideOnlyStatus')]
     public function test_simple(IetfHealthCheckStatus $expectedStatus): void
     {
         $response = IetfHealthCheckResponseFactory::new()
@@ -35,22 +34,20 @@ final class IetfHealthCheckResponseFactoryTest extends TestCase
         $this->assertSame($expectedStatus, $response->status);
     }
 
-    public function provideOnlyStatus(): iterable
+    public static function provideOnlyStatus(): iterable
     {
         yield 'pass' => [IetfHealthCheckStatus::Pass];
         yield 'fail' => [IetfHealthCheckStatus::Fail];
         yield 'warn' => [IetfHealthCheckStatus::Warn];
     }
 
-    /**
-     * @dataProvider provideStatusWithChecks
-     */
+    #[DataProvider('provideStatusWithChecks')]
     public function test_with_checks(IetfHealthCheckStatus $expectedStatus, IetfHealthCheckResponse $response): void
     {
         $this->assertEquals($expectedStatus, $response->status);
     }
 
-    public function provideStatusWithChecks(): iterable
+    public static function provideStatusWithChecks(): iterable
     {
         yield 'Pass with 1 pass check' => [
             IetfHealthCheckStatus::Pass,

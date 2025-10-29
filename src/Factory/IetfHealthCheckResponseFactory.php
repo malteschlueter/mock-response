@@ -8,7 +8,9 @@ use App\DataTransferObject\IetfHealthCheckCheck;
 use App\DataTransferObject\IetfHealthCheckResponse;
 use App\Enum\IetfHealthCheckStatus;
 use Assert\Assert;
+use Symfony\Component\DependencyInjection\Attribute\Exclude;
 
+#[Exclude]
 final class IetfHealthCheckResponseFactory
 {
     private ?IetfHealthCheckStatus $status = null;

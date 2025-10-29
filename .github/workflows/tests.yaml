@@ -1,7 +1,7 @@
 name: Tests
 
 env:
-    php_version: '8.3'
+    php_version: '8.4'
 
 on:
     push:
@@ -39,10 +39,7 @@ jobs:
                 run: composer install --prefer-dist --no-progress
 
             -   name: Install dev-ops dependencies
-                run: composer install -d ./dev-ops/ci --prefer-dist --no-progress
-
-            -   name: Install phpunit
-                run: php bin/phpunit install --configuration dev-ops/ci/config/phpunit.xml.dist
+                run: composer install --working-dir=./dev-ops/ci --prefer-dist --no-progress
 
             -   name: Store build
                 uses: actions/cache@v4

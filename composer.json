@@ -4,7 +4,7 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "beberlei/assert": "^3.3.3",
@@ -21,10 +21,11 @@
         "twig/twig": "^3.21.1"
     },
     "require-dev": {
+        "dbrekelmans/bdi": "^1.4",
+        "phpunit/phpunit": "^12.4.1",
         "symfony/browser-kit": "7.3.*",
         "symfony/css-selector": "7.3.*",
-        "symfony/phpunit-bridge": "7.3.*",
-        "symfony/stopwatch": "7.3.*",
+        "symfony/panther": "^2.2",
         "symfony/web-profiler-bundle": "7.3.*"
     },
     "config": {
@@ -33,6 +34,7 @@
             "symfony/flex": true,
             "symfony/runtime": true
         },
+        "bump-after-update": true,
         "sort-packages": true
     },
     "autoload": {
@@ -54,7 +56,8 @@
         "symfony/polyfill-php80": "*",
         "symfony/polyfill-php81": "*",
         "symfony/polyfill-php82": "*",
-        "symfony/polyfill-php83": "*"
+        "symfony/polyfill-php83": "*",
+        "symfony/polyfill-php84": "*"
     },
     "scripts": {
         "auto-scripts": {

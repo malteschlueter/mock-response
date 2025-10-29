@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Enum\IetfHealthCheckStatus;
+use App\Enum\JavaScriptMockType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -18,6 +19,7 @@ final class HomeController extends AbstractController
     {
         return $this->render('home.html.twig', [
             'status_codes' => Response::$statusTexts,
+            'javascript_mock_types' => JavaScriptMockType::cases(),
             'ietf_health_check_status' => IetfHealthCheckStatus::cases(),
             'ietf_health_check_status_with_checks' => [
                 [
