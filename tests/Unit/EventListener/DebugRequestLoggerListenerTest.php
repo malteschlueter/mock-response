@@ -7,6 +7,7 @@ namespace App\Tests\Unit\EventListener;
 use App\EventListener\DebugRequestLoggerListener;
 use App\Kernel;
 use App\Tests\Unit\Fake\TestLogger;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
@@ -14,9 +15,7 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 final class DebugRequestLoggerListenerTest extends TestCase
 {
-    /**
-     * @dataProvider provideNotLoggingExpectations
-     */
+    #[DataProvider('provideNotLoggingExpectations')]
     public function test_foo(?string $debugSecret): void
     {
         $listener = new DebugRequestLoggerListener($logger = new TestLogger(), $debugSecret);
@@ -32,7 +31,7 @@ final class DebugRequestLoggerListenerTest extends TestCase
         self::assertFalse($logger->hasInfoMessage());
     }
 
-    public function provideNotLoggingExpectations(): iterable
+    public static function provideNotLoggingExpectations(): iterable
     {
         yield 'No debug secret' => [null];
         yield 'False debug secret' => ['some-false-secret'];

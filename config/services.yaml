@@ -8,10 +8,5 @@ services:
 
     App\:
         resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Enum/'
-            - '../src/Factory/'
-            - '../src/Kernel.php'
 
     Monolog\Processor\UidProcessor:

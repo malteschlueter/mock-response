@@ -25,9 +25,9 @@ return (new Config())
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@DoctrineAnnotation' => true,
-        '@PHP83Migration' => true,
-        '@PHP80Migration:risky' => true,
-        '@PHPUnit84Migration:risky' => true,
+        '@PHP8x4Migration' => true,
+        '@PHP8x2Migration:risky' => true,
+        '@PHPUnit10x0Migration:risky' => true,
 
         'array_indentation' => true,
         'array_syntax' => ['syntax' => 'short'],

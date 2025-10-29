@@ -14,7 +14,7 @@ composer-install-app:
 
 .PHONY: composer-update-app
 composer-update-app:
-	composer update --bump-after-update
+	composer update
 
 .PHONY: composer-install-dev-ops
 composer-install-dev-ops:
@@ -22,7 +22,7 @@ composer-install-dev-ops:
 
 .PHONY: composer-update-dev-ops
 composer-update-dev-ops:
-	composer update --bump-after-update --working-dir=./dev-ops/ci
+	composer update --working-dir=./dev-ops/ci
 
 .PHONY: cs-fix
 cs-fix: ## Run php-cs-fixer
