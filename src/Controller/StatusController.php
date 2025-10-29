@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\Attribute\AsController;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[AsController]
-final class MockController extends AbstractController
+final class StatusController extends AbstractController
 {
     use ClockAwareTrait;
 
@@ -25,7 +25,7 @@ final class MockController extends AbstractController
         $response = new Response(content: 'Response status code: ' . $code, status: $code);
 
         if ($setCookie) {
-            $response->headers->setCookie(Cookie::create(name: 'mock_status_code', value: (string)$code));
+            $response->headers->setCookie(Cookie::create(name: 'mock_status_code', value: (string) $code));
         }
 
         return $response;
