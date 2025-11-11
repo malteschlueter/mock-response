@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use App\Enum\IetfHealthCheckStatus;
 use App\Enum\JavaScriptMockType;
+use App\Enum\SizeMockType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -20,6 +21,10 @@ final class HomeController extends AbstractController
         return $this->render('home.html.twig', [
             'status_codes' => Response::$statusTexts,
             'javascript_mock_types' => JavaScriptMockType::cases(),
+            'size_mock_types' => [
+                '100 kB' => SizeMockType::s100KB,
+                '1 MB' => SizeMockType::s1MB,
+            ],
             'ietf_health_check_status' => IetfHealthCheckStatus::cases(),
             'ietf_health_check_status_with_checks' => [
                 [

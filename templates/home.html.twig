@@ -56,6 +56,28 @@
     </div>
 
     <div>
+        <h2>Size</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Size</th>
+                <th>Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for name, size in size_mock_types  %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>
+                        <a href="{{ url('mock_size_always', {'size': size.value}) }}">Always</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div>
         <h2>
             IETF health check
             <a href="https://datatracker.ietf.org/doc/html/draft-inadarei-api-health-check" target="_blank">
