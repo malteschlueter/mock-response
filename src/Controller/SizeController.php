@@ -19,6 +19,7 @@ final class SizeController extends AbstractController
         $content = match ($size) {
             SizeMockType::s100KB => str_repeat('A', 102400),
             SizeMockType::s1MB => str_repeat('A', 1048576),
+            SizeMockType::LARGE_IMAGE_INJECTED => $this->renderView('size/large-image-injected.html.twig'),
             default => throw new \RuntimeException('Unexpected size type'),
         };
 

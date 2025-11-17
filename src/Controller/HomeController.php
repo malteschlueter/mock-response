@@ -24,6 +24,7 @@ final class HomeController extends AbstractController
             'size_mock_types' => [
                 '100 kB' => SizeMockType::s100KB,
                 '1 MB' => SizeMockType::s1MB,
+                'Large image injected' => SizeMockType::LARGE_IMAGE_INJECTED,
             ],
             'ietf_health_check_status' => IetfHealthCheckStatus::cases(),
             'ietf_health_check_status_with_checks' => [
