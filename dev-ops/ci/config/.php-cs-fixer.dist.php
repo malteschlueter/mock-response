@@ -10,6 +10,7 @@ $finder = Finder::create()
         __DIR__,
         dirname(__DIR__, 3) . '/bin',
         dirname(__DIR__, 3) . '/config',
+        dirname(__DIR__, 3) . '/dev-ops/ci/config',
         dirname(__DIR__, 3) . '/public',
         dirname(__DIR__, 3) . '/src',
         dirname(__DIR__, 3) . '/tests',

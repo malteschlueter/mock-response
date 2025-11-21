@@ -36,6 +36,10 @@ phpunit: ## Run phpunit with coverage
 phpstan: ## Run phpstan
 	php -d memory_limit=-1 dev-ops/ci/vendor/bin/phpstan analyse -c dev-ops/ci/config/phpstan.neon
 
+.PHONY: phpstan-generate-baseline
+phpstan-generate-baseline: ## Run phpstan
+	php -d memory_limit=-1 dev-ops/ci/vendor/bin/phpstan analyse -c dev-ops/ci/config/phpstan.neon --generate-baseline=dev-ops/ci/config/phpstan-baseline.neon
+
 .PHONY: tests
 tests: cs-fix phpstan phpunit ## Run all tests
 

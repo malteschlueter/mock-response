@@ -15,7 +15,7 @@ final class JavaScriptControllerTest extends PantherTestCase
     use ClockSensitiveTrait;
 
     #[DataProvider('provideTypes')]
-    public function test_that_javascript_type_is_always_expected(string $expectedLogMessage, JavaScriptMockType $javaScriptMockType): void
+    public function test_that_javascript_type_is_always_expected(array $expectedLogMessages, JavaScriptMockType $javaScriptMockType): void
     {
         $client = self::createPantherClient();
 
@@ -23,17 +23,20 @@ final class JavaScriptControllerTest extends PantherTestCase
 
         $browserLog = $client->getWebDriver()->manage()->getLog('browser');
 
-        $this->assertCount(1, $browserLog);
+        $this->assertCount(2, $browserLog);
 
-        $logEntry = reset($browserLog);
+        $logEntries = array_map(fn (array $entry): string => $entry['message'], $browserLog);
 
-        $this->assertSame($expectedLogMessage, $logEntry['message']);
+        $this->assertSame($expectedLogMessages, $logEntries);
     }
 
     public static function provideTypes(): iterable
     {
         yield 'Type: ' . JavaScriptMockType::Error->name => [
-            'http://127.0.0.1:9080/javascript/error 9:14 Uncaught Error: This is a mock error response.',
+            [
+                'http://127.0.0.1:9080/javascript/error 9:16 "This is a mock error log message."',
+                'http://127.0.0.1:9080/javascript/error 11:14 Uncaught Error: This is a mock error response.',
+            ],
             JavaScriptMockType::Error,
         ];
     }
