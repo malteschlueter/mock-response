@@ -8,25 +8,25 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "beberlei/assert": "^3.3.3",
-        "symfony/clock": "7.3.*",
-        "symfony/console": "7.3.*",
-        "symfony/dotenv": "7.3.*",
-        "symfony/flex": "^2.8.2",
-        "symfony/framework-bundle": "7.3.*",
-        "symfony/monolog-bundle": "^3.10",
-        "symfony/runtime": "7.3.*",
-        "symfony/twig-bundle": "7.3.*",
-        "symfony/yaml": "7.3.*",
-        "twig/extra-bundle": "^3.21",
-        "twig/twig": "^3.21.1"
+        "symfony/clock": "7.4.*",
+        "symfony/console": "7.4.*",
+        "symfony/dotenv": "7.4.*",
+        "symfony/flex": "^2.10.0",
+        "symfony/framework-bundle": "7.4.*",
+        "symfony/monolog-bundle": "^3.11",
+        "symfony/runtime": "7.4.*",
+        "symfony/twig-bundle": "7.4.*",
+        "symfony/yaml": "7.4.*",
+        "twig/extra-bundle": "^3.22.1",
+        "twig/twig": "^3.22.0"
     },
     "require-dev": {
-        "dbrekelmans/bdi": "^1.4",
-        "phpunit/phpunit": "^12.4.1",
-        "symfony/browser-kit": "7.3.*",
-        "symfony/css-selector": "7.3.*",
-        "symfony/panther": "^2.2",
-        "symfony/web-profiler-bundle": "7.3.*"
+        "dbrekelmans/bdi": "^1.4.1",
+        "phpunit/phpunit": "^12.4.4",
+        "symfony/browser-kit": "7.4.*",
+        "symfony/css-selector": "7.4.*",
+        "symfony/panther": "^2.3",
+        "symfony/web-profiler-bundle": "7.4.*"
     },
     "config": {
         "allow-plugins": {
@@ -77,7 +77,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": false,
-            "require": "7.3.*"
+            "require": "7.4.*"
         }
     }
 }

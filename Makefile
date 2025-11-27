@@ -30,7 +30,7 @@ cs-fix: ## Run php-cs-fixer
 
 .PHONY: phpunit
 phpunit: ## Run phpunit with coverage
-	php bin/phpunit --configuration dev-ops/ci/config/phpunit.xml.dist --testsuite=unit,integration
+	php bin/phpunit --configuration dev-ops/ci/config/phpunit.xml.dist --testsuite=unit,integration --display-deprecations
 
 .PHONY: phpstan
 phpstan: ## Run phpstan
