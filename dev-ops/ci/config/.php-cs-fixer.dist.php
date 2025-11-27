@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use PhpCsFixer\Config;
 use PhpCsFixer\Finder;
+use PhpCsFixer\Runner\Parallel\ParallelConfigFactory;
 
 $finder = Finder::create()
     ->in([
@@ -15,13 +16,20 @@ $finder = Finder::create()
         dirname(__DIR__, 3) . '/src',
         dirname(__DIR__, 3) . '/tests',
     ])
+    ->append(
+        Symfony\Component\Finder\Finder::create()
+            ->files()
+            ->in(dirname(__DIR__, 3) . '/bin')
+            ->ignoreDotFiles(true)
+            ->ignoreVCS(true)
+    )
 ;
 
 return (new Config())
     ->setFinder($finder)
     ->setRiskyAllowed(true)
     ->setCacheFile(dirname(__DIR__) . '/cache/.php-cs-fixer.cache')
-    ->setParallelConfig(\PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
+    ->setParallelConfig(ParallelConfigFactory::detect())
     ->setRules([
         '@Symfony' => true,
         '@Symfony:risky' => true,
